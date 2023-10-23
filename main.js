@@ -18,11 +18,14 @@ const toDoList=[item1,item2,item3];
 let listContainer=document.getElementById("list");
 
 
-function printList(){
+function printList(taskFromUser){
     
     for (let i = 0; i < toDoList.length; i++) { 
+        
         let listItem=document.getElementById("listitem");
         const finishedTask = document.createElement("input");
+        toDoList.push=taskFromUser;
+        
          if (true) {
             listItem.innerHTML=(toDoList[i]).name;
             finishedTask.type="checkbox";
@@ -35,11 +38,29 @@ function printList(){
             console.log(toDoList[i]);
             listItem.appendChild(finishedTask);
             listContainer.appendChild(listItem);
+            
+        }
+    
     }
 
+const addTask = (e)=>{
+    e.preventDefault();
+
+    const addTaskUserinput=document.getElementById("userinput").value;
+
+    if (addTaskUserinput==="") {
+        alert("You forgot to write something to do.");
+        
     }
-   
-   
+    console.log("du klickade");
+    const taskFromUser=document.getElementById("userinput").value;
+    document.getElementById("userinput").value="";
+}
 
 
+document.getElementById("input-container-form").addEventListener("submit",addTask);
+
+const submitButton = document.getElementById("submit");
+submitButton.addEventListener("click",addTask);
 printList();
+
