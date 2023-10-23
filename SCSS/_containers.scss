@@ -6,8 +6,10 @@
     height:100vh;
     background: linear-gradient(155deg,green, yellow);
     display:flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap:20px;
 
 }
 #input-container{
@@ -30,4 +32,8 @@
 }
 #submit{
     background-color:v.$background-color;
+}
+#task-container{
+    @include m.container;
+    display:block;
 }

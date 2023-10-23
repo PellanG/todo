@@ -3,7 +3,6 @@
 
 @mixin container{
     width:400px;
-    height:200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,4 +10,5 @@
     background-color:v.$background-color;
     border:2px solid black;
     border-radius: 10px;
+    padding:20px;
 }
