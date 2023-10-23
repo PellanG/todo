@@ -1,0 +1,14 @@
+@use"variable" as v;
+
+
+@mixin container{
+    width:400px;
+    height:200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    background-color:v.$background-color;
+    border:2px solid black;
+    border-radius: 10px;
+}
