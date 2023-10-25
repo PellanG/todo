@@ -21,6 +21,9 @@
     align-items: center;
     gap:10px;
    }
+   @include m.desktop{
+    width:400px;
+}
 }
 #userinput{
     width:200px;
@@ -36,4 +39,7 @@
 #task-container{
     @include m.container;
     display:block;
+    @include m.desktop{
+        width:400px;
+    }
 }

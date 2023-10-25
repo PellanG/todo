@@ -28,7 +28,7 @@ function creatHtml(){//Skapar html för listan.
         isDeleted.id="close";
         isDeleted.className="closeBtn";
         finishedTask.type="checkbox";
-        finishedTask.id="fixedTask"
+        finishedTask.name="itsDone";
         
         
         isDeleted.innerHTML="\u00D7";
@@ -61,13 +61,18 @@ function creatHtml(){//Skapar html för listan.
         }
 
 function completedTask(theTask){
-    theTask.className ="checked";
-    theTask.done=true;
-    
-     
+    if (theTask.done=true) {
+        theTask.className ="checked";
     console.log(theTask);  
-
-}
+    creatHtml();
+    } else {
+        theTask=!theTask;
+        creatHtml();  
+    }
+    
+    
+    
+}   
 
     
 const addTask = (e)=>{ //Lägger till det användaren skriver i listan
