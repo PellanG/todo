@@ -56,6 +56,7 @@ function creatHtml(){//Skapar html för listan.
         finishedTask.addEventListener("change",() => {
             completedTask(toDoList[i]);
         });
+        saveList(); 
     } 
         
         }
@@ -65,16 +66,18 @@ function completedTask(theTask){
         theTask.className ="checked";
     console.log(theTask);  
     creatHtml();
+     
     } else {
-        theTask=!theTask;
-        creatHtml();  
+        theTask.done=false;
+
+        creatHtml(); 
+        
     }
     
     
     
 }   
-
-    
+   
 const addTask = (e)=>{ //Lägger till det användaren skriver i listan
     e.preventDefault();
     const addTaskUserinput=document.getElementById("userinput").value;
@@ -95,17 +98,27 @@ const addTask = (e)=>{ //Lägger till det användaren skriver i listan
     }
     
 }
+function saveList(){
+    localStorage.setItem("list",JSON.stringify(toDoList));
+}
+function loadList(){
+    const listFromLs = JSON.parse(localStorage.getItem("list")||"[]");
+    console.log("data from LS:",listFromLs);
+    toDoList=listFromLs;
+    
+}
 
 const item1=new Listitem("Städa",false,false);
 const item2=new Listitem("Diska",false,false);
 const item3=new Listitem("Handla",false,false);
 
-const toDoList=[item1,item2,item3];
+let toDoList=[item1,item2,item3];
 
 const submitButton = document.getElementById("submit");
 submitButton.addEventListener("click",addTask);
-
+loadList();
 creatHtml();
+
 
 
 
