@@ -12,8 +12,6 @@ class Listitem{
         
     }
 }
-
-
 function creatHtml(){//Skapar html för listan.
     const listOfTask=document.getElementById("list");
     listOfTask.innerHTML="";
@@ -30,7 +28,8 @@ function creatHtml(){//Skapar html för listan.
         isDeleted.id="close";
         isDeleted.className="closeBtn";
         finishedTask.type="checkbox";
-        finishedTask.className="checked";
+        finishedTask.id="fixedTask"
+        
         
         isDeleted.innerHTML="\u00D7";
         isDeleted.checked=toDoList[i].removeTask;
@@ -42,11 +41,11 @@ function creatHtml(){//Skapar html för listan.
         listItem.appendChild(taskName);
         listItem.appendChild(isDeleted);
         listContainer.appendChild(listItem);
-        
-        isDeleted.addEventListener("click",() => {
+
+        isDeleted.addEventListener("click",() => { //Anropa funktion
             deleteTask(toDoList[i]);
         });
-        function deleteTask(task){
+        function deleteTask(task){          //Funktionen för att ta bort ett listobjekt
             console.log(task);
             task.removeTask=true;
             if (true) { 
@@ -54,10 +53,21 @@ function creatHtml(){//Skapar html för listan.
                 creatHtml(); 
             }      
         }
+        finishedTask.addEventListener("change",() => {
+            completedTask(toDoList[i]);
+        });
     } 
         
         }
-        
+
+function completedTask(theTask){
+    theTask.className ="checked";
+    theTask.done=true;
+    
+     
+    console.log(theTask);  
+
+}
 
     
 const addTask = (e)=>{ //Lägger till det användaren skriver i listan
@@ -91,6 +101,8 @@ const submitButton = document.getElementById("submit");
 submitButton.addEventListener("click",addTask);
 
 creatHtml();
+
+
 
 
 
