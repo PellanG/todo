@@ -2,75 +2,64 @@ import "./SCSS/main.scss";
 class Listitem{
     name;
     done;
+    removeTask;
     
 
-    constructor(name,done){
+    constructor(name,done,removeTask){
         this.name=name;
         this.done=done;
+        this.removeTask=removeTask;
         
     }
 }
+
+
 function creatHtml(){//Skapar html för listan.
     const listOfTask=document.getElementById("list");
     listOfTask.innerHTML="";
-    for (let i = 0; i < toDoList.length; i++) { 
-        
+    for (let i = 0; i < toDoList.length; i++){
+    
+
+        const listContainer=document.getElementById("list");
         const listItem=document.createElement("li");
         const taskName=document.createElement("span");
         const finishedTask = document.createElement("input");
-        const isDeleted=document.createElement("span");
-        const closeBtn=document.createTextNode("\u00D7");
+        const isDeleted=document.createElement("button");
         
-
-        isDeleted.className="closeItem";
+        
+        isDeleted.id="close";
+        isDeleted.className="closeBtn";
         finishedTask.type="checkbox";
         finishedTask.className="checked";
         
-        finishedTask.checked=toDoList[i].done;
-        taskName.innerHTML=toDoList[i].name;
+        isDeleted.innerHTML="\u00D7";
+        isDeleted.checked=toDoList[i].removeTask;
+        finishedTask.checked = toDoList[i].done;
+        taskName.innerHTML = toDoList[i].name;
         
         
         listItem.appendChild(finishedTask);
         listItem.appendChild(taskName);
-        isDeleted.appendChild(closeBtn);
         listItem.appendChild(isDeleted);
         listContainer.appendChild(listItem);
+        
+        isDeleted.addEventListener("click",() => {
+            deleteTask(toDoList[i]);
+        });
+        function deleteTask(task){
+            console.log(task);
+            task.removeTask=true;
+            if (true) { 
+                toDoList.splice(i,1);
+                creatHtml(); 
+            }      
+        }
+    } 
+        
         }
         
+
     
-    }  
-function creatHtmlNewItem(){//Skapar html för nya listobjekt(ej pushat till lista)
-        const newUserInput=document.getElementById("userinput").value;
-        const newlistItem=document.createElement("li");
-        const inputValue = document.createTextNode(newUserInput);
-        const newfinishedTask = document.createElement("input");
-        const newisDeleted=document.createElement("span");
-        const newcloseBtn=document.createTextNode("\u00D7");
-        
-        newisDeleted.className="closeItem";
-        newfinishedTask.type="checkbox";
-        newfinishedTask.className="checked";
-        
-        newlistItem.appendChild(newfinishedTask);
-        newlistItem.appendChild(inputValue);
-        newisDeleted.appendChild(newcloseBtn);
-        newlistItem.appendChild(newisDeleted);
-        listContainer.appendChild(newlistItem);
-    
-    }
-
-function closeTask(){
-    const close=document.getElementsByClassName("closeItem");
-    console.log(close);
-    
-}
-
-const item1=new Listitem("Städa",false);
-const item2=new Listitem("Diska",false);
-const item3=new Listitem("Handla",false);
-
-const toDoList=[item1,item2,item3];
-
 const addTask = (e)=>{ //Lägger till det användaren skriver i listan
     e.preventDefault();
     const addTaskUserinput=document.getElementById("userinput").value;
@@ -80,7 +69,7 @@ const addTask = (e)=>{ //Lägger till det användaren skriver i listan
         
     }
     else{
-    const newItem = new Listitem(addTaskUserinput,false);
+    const newItem = new Listitem(addTaskUserinput,false,false);
     console.log(newItem);
     toDoList.push(newItem);
     creatHtml();
@@ -92,9 +81,18 @@ const addTask = (e)=>{ //Lägger till det användaren skriver i listan
     
 }
 
-let listContainer=document.getElementById("list");
+const item1=new Listitem("Städa",false,false);
+const item2=new Listitem("Diska",false,false);
+const item3=new Listitem("Handla",false,false);
+
+const toDoList=[item1,item2,item3];
+
 const submitButton = document.getElementById("submit");
 submitButton.addEventListener("click",addTask);
+
 creatHtml();
+
+
+
 
 
