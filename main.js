@@ -15,68 +15,80 @@ class Listitem{
 function creatHtml(){//Skapar html för listan.
     const listOfTask=document.getElementById("list");
     listOfTask.innerHTML="";
-    for (let i = 0; i < toDoList.length; i++){
-    
 
+    for (let i = 0; i < toDoList.length; i++){
         const listContainer=document.getElementById("list");
-        const listItem=document.createElement("li");
+        const taskItem=document.createElement("li");
         const taskName=document.createElement("span");
-        const finishedTask = document.createElement("input");
+        const finishedTask = document.createElement("button");
         const isDeleted=document.createElement("button");
         
-        
+        taskItem.className="listitem";
+        taskName.className="itsDone";
         isDeleted.id="close";
         isDeleted.className="closeBtn";
-        finishedTask.type="checkbox";
-        finishedTask.name="itsDone";
-        
+        finishedTask.className="checkBtn";
         
         isDeleted.innerHTML="\u00D7";
         isDeleted.checked=toDoList[i].removeTask;
-        finishedTask.checked = toDoList[i].done;
+        finishedTask.value = toDoList[i].done;
         taskName.innerHTML = toDoList[i].name;
+       
+        
+        taskItem.appendChild(finishedTask);
+        taskItem.appendChild(taskName);
+        taskItem.appendChild(isDeleted);
+        listContainer.appendChild(taskItem);
         
         
-        listItem.appendChild(finishedTask);
-        listItem.appendChild(taskName);
-        listItem.appendChild(isDeleted);
-        listContainer.appendChild(listItem);
-
-        isDeleted.addEventListener("click",() => { //Anropa funktion
-            deleteTask(toDoList[i]);
-        });
+        
         function deleteTask(task){          //Funktionen för att ta bort ett listobjekt
-            console.log(task);
             task.removeTask=true;
             if (true) { 
                 toDoList.splice(i,1);
                 creatHtml(); 
             }      
         }
-        finishedTask.addEventListener("change",() => {
-            completedTask(toDoList[i]);
+        finishedTask.addEventListener("click",() => {
+           completedTask(finishedTask,toDoList[i]);
         });
-        saveList(); 
+
+        isDeleted.addEventListener("click",() => { //Anropa funktion
+            deleteTask(toDoList[i]);
+        });
     } 
-        
+    
+    saveList(); 
         }
+   
+function completedTask (theTask,tasks){//Markerar listobjekt som klar
+            tasks.done = !tasks.done;
+               if (tasks.done) {
+                console.log("yes");
+                theTask.classList.add("checked");
+               }
+                else{
+                theTask.classList.toggle("checked");
+                console.log(tasks);
+                console.log(theTask);
+                }
+               saveList();
+                }
+            
+                
+            
+            
+            
 
-function completedTask(theTask){
-    if (theTask.done=true) {
-        theTask.className ="checked";
-    console.log(theTask);  
-    creatHtml();
-     
-    } else {
-        theTask.done=false;
-
-        creatHtml(); 
+            
+                
+            
         
-    }
+            
+            
+     
     
-    
-    
-}   
+      
    
 const addTask = (e)=>{ //Lägger till det användaren skriver i listan
     e.preventDefault();
@@ -90,12 +102,12 @@ const addTask = (e)=>{ //Lägger till det användaren skriver i listan
     const newItem = new Listitem(addTaskUserinput,false,false);
     console.log(newItem);
     toDoList.push(newItem);
+    
     creatHtml();
-    
-    
     
     document.getElementById("userinput").value="";
     }
+    
     
 }
 function saveList(){
@@ -103,8 +115,8 @@ function saveList(){
 }
 function loadList(){
     const listFromLs = JSON.parse(localStorage.getItem("list")||"[]");
-    console.log("data from LS:",listFromLs);
     toDoList=listFromLs;
+    creatHtml();
     
 }
 
@@ -116,6 +128,15 @@ let toDoList=[item1,item2,item3];
 
 const submitButton = document.getElementById("submit");
 submitButton.addEventListener("click",addTask);
+
+/*const taskContainer=document.getElementById("list")
+taskContainer.addEventListener("click",(e)=>{
+if (e.target.tagName==="input") {
+    e.target.classList.toggle("checked");
+    console.log("hje");
+}
+},false);
+console.log(taskContainer);*/
 loadList();
 creatHtml();
 

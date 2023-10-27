@@ -34,8 +34,14 @@ ul li:hover{
     background-color:v.$background-color;
     border-radius: 50%;
 }
+.checkBtn{
+    font-size: 0.6rem;
+    background-color: rgba(251, 249, 249, 0.403);
+
+}
 .checked{
-    background-color: grey;
+    background-color: rgb(6, 108, 6);
     text-decoration: line-through;
 }
+
 
