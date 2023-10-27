@@ -36,12 +36,17 @@ ul li:hover{
 }
 .checkBtn{
     font-size: 0.6rem;
-    background-color: rgba(251, 249, 249, 0.403);
-
+    background-color: rgba(248, 5, 5, 0.556);
+    border:none;
+    outline: none;
 }
+
 .checked{
     background-color: rgb(6, 108, 6);
     text-decoration: line-through;
 }
-
+#sortBtn{
+    background-color:v.$background-color;
+    border: 1px solid black;
+}
 

@@ -1,4 +1,5 @@
 import "./SCSS/main.scss";
+
 class Listitem{
     name;
     done;
@@ -15,7 +16,6 @@ class Listitem{
 function creatHtml(){//Skapar html för listan.
     const listOfTask=document.getElementById("list");
     listOfTask.innerHTML="";
-
     for (let i = 0; i < toDoList.length; i++){
         const listContainer=document.getElementById("list");
         const taskItem=document.createElement("li");
@@ -23,6 +23,7 @@ function creatHtml(){//Skapar html för listan.
         const finishedTask = document.createElement("button");
         const isDeleted=document.createElement("button");
         
+
         taskItem.className="listitem";
         taskName.className="itsDone";
         isDeleted.id="close";
@@ -34,13 +35,10 @@ function creatHtml(){//Skapar html för listan.
         finishedTask.value = toDoList[i].done;
         taskName.innerHTML = toDoList[i].name;
        
-        
         taskItem.appendChild(finishedTask);
         taskItem.appendChild(taskName);
         taskItem.appendChild(isDeleted);
         listContainer.appendChild(taskItem);
-        
-        
         
         function deleteTask(task){          //Funktionen för att ta bort ett listobjekt
             task.removeTask=true;
@@ -49,6 +47,7 @@ function creatHtml(){//Skapar html för listan.
                 creatHtml(); 
             }      
         }
+       
         finishedTask.addEventListener("click",() => {
            completedTask(finishedTask,toDoList[i]);
         });
@@ -57,39 +56,22 @@ function creatHtml(){//Skapar html för listan.
             deleteTask(toDoList[i]);
         });
     } 
-    
-    saveList(); 
+        saveList(toDoList);
+        
         }
-   
-function completedTask (theTask,tasks){//Markerar listobjekt som klar
+function completedTask (theTask,tasks){//Markerar listobjekt som klar(ej Ls klar)
             tasks.done = !tasks.done;
                if (tasks.done) {
-                console.log("yes");
+                console.log(tasks);
                 theTask.classList.add("checked");
                }
                 else{
                 theTask.classList.toggle("checked");
                 console.log(tasks);
-                console.log(theTask);
+                
                 }
                saveList();
                 }
-            
-                
-            
-            
-            
-
-            
-                
-            
-        
-            
-            
-     
-    
-      
-   
 const addTask = (e)=>{ //Lägger till det användaren skriver i listan
     e.preventDefault();
     const addTaskUserinput=document.getElementById("userinput").value;
@@ -119,6 +101,20 @@ function loadList(){
     creatHtml();
     
 }
+ function sortFunction(){// Funkar inte
+    toDoList.sort((a , b)=>{
+        if(a.done===true && b.done===false){
+        console.log("no");
+        return 1;
+    }else
+        if(b.done===false && a.done===true){
+        console.log("yes");
+        return -1;
+        
+        }
+        return 0;
+    });
+}
 
 const item1=new Listitem("Städa",false,false);
 const item2=new Listitem("Diska",false,false);
@@ -129,16 +125,15 @@ let toDoList=[item1,item2,item3];
 const submitButton = document.getElementById("submit");
 submitButton.addEventListener("click",addTask);
 
-/*const taskContainer=document.getElementById("list")
-taskContainer.addEventListener("click",(e)=>{
-if (e.target.tagName==="input") {
-    e.target.classList.toggle("checked");
-    console.log("hje");
-}
-},false);
-console.log(taskContainer);*/
+const sortBtn=document.getElementById("sortBtn");
+sortBtn.addEventListener("click", ()=>{
+    sortFunction();
+})
+
 loadList();
 creatHtml();
+
+
 
 
 
